@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Timer.css';
 
 const Timer = () => {
-  const [studyBlocks, setStudyBlocks] = useState([false, false, false, false, false]);
+  const [studyBlocks, setStudyBlocks] = useState(Array(5).fill(false)); //5 instances of study blocks
   const [currentBlock, setCurrentBlock] = useState(0);
-  const [seconds, setSeconds] = useState(1500); // 25 minutes in seconds
+  const [seconds, setSeconds] = useState(5); //25 * 60 default
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -53,9 +53,9 @@ const Timer = () => {
   };
 
   const handleReset = () => {
-    setStudyBlocks([false, false, false, false, false]);
+    setStudyBlocks([false, false, false, false, false]); //find way to streamline this
     setCurrentBlock(0);
-    setSeconds(1500);
+    setSeconds(25 * 60);
     setIsRunning(false);
   };
 
@@ -69,12 +69,27 @@ const Timer = () => {
 
   return (
     <div className="timer-container">
-      <div className="stars-container">
-        {[...Array(20)].map((_, index) => (
-          <div key={index} className="star"></div>
-        ))}
-      </div>
+      <nav className="navbar">
+        <div className="navbar-brand">Simple Pomodoro</div>
+        <ul className="navbar-menu">
+          <li className="navbar-item">
+            <a href="/analytics">Analytics</a>
+          </li>
+          <li className="navbar-item">
+            <a href="/about">About</a>
+          </li>
+          <li className="navbar-item dropdown">
+            <span className="dropdown-toggle">Set Study Sessions</span>
+            <div className="dropdown-menu">
+              <a href="/session-1">5 Sessions</a>
+              <a href="/session-2">4 Sessions</a>
+              <a href="/session-3">3 Sessions</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
       <h1 className="timer-title">Timer</h1>
+      <p className="timer-text">Time: {formatTime(seconds)}</p>
       <div className="study-blocks">
         {studyBlocks.map((block, index) => (
           <div
@@ -83,7 +98,6 @@ const Timer = () => {
           ></div>
         ))}
       </div>
-      <p className="timer-text">Time: {formatTime(seconds)}</p>
       <div className="timer-buttons">
         {!isRunning && (
           <>
@@ -95,6 +109,6 @@ const Timer = () => {
       </div>
     </div>
   );
-};
+}; 
 
 export default Timer;

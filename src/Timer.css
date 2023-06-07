@@ -1,80 +1,13 @@
 body {
-    background-color: #b8ecf0c8;
-    overflow: hidden;
+    background-color: hsla(350, 100%, 88%, 0.32);  /*or any other pink color code you prefer */
   }
-  
-  @keyframes falling-stars {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(100%);
-    }
-  }
-  
-  .stars-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: -1;
-  }
-  
-  .star {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 10px;
-    background-color: #000000;
-    border-radius: 50%;
-    animation: falling-stars 3s linear infinite;
-  }
-  
-  @keyframes falling-stars {
-    0% {
-      transform: translate(0, -10px);
-    }
-    100% {
-      transform: translate(100vw, 100vh);
-    }
-  }
-  
-  
-  
-  /* Rest of the CSS code remains the same */
-  
-  
-  .star:nth-child(1) {
-    animation-delay: 0s;
-    left: 5%;
-    animation-duration: 4s;
-  }
-  
-  .star:nth-child(2) {
-    animation-delay: 0.5s;
-    left: 15%;
-    animation-duration: 5s;
-  }
-  
-  /* Repeat the above for the remaining stars with different animation delays and positions */
-  /* .star:nth-child(3) through .star:nth-child(20) */
-  
-  
-
-/* body {
-    background-color: hsla(350, 100%, 88%, 0.32); /* or any other pink color code you prefer
-  }
-*/
 
 .timer-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50vh;
+    height: 70vh;
 }
 
 .timer-title {
@@ -113,3 +46,63 @@ body {
 .study-block.complete {
     background-color: green;
 }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: #f2ff39;
+  }
+  
+  .navbar-brand {
+    margin-left: 20px;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-item {
+    margin-right: 10px;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f0f0f0;
+    display: none;
+    padding: 10px;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
