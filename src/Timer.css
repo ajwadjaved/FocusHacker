@@ -1,108 +1,110 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css');
+
 body {
-    background-color: hsla(350, 100%, 88%, 0.32);  /*or any other pink color code you prefer */
+    background-color: hsla(350, 100%, 88%, 0.32); /* or any other pink color code you prefer */
+    height: 100vh; /* Set the height of the body to 100% viewport height */
+    margin: 0; /* Remove default margin */
   }
 
 .timer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
 }
 
 .timer-title {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .timer-text {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .timer-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .timer-buttons button {
-    padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .study-blocks {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .study-block {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: red;
-    margin: 0 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: red;
+  margin: 0 2px;
 }
 
 .study-block.complete {
-    background-color: green;
+  background-color: green;
 }
 
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-    background-color: #f2ff39;
-  }
-  
-  .navbar-brand {
-    margin-left: 20px;
-  }
-  
-  .navbar-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-item {
-    margin-right: 10px;
-  }
-  
-  .dropdown {
-    position: relative;
-  }
-  
-  .dropdown-toggle {
-    cursor: pointer;
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #f0f0f0;
-    display: none;
-    padding: 10px;
-  }
-  
-  .dropdown-menu a {
-    display: block;
-    padding: 5px;
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #f2ff39;
+}
+
+.navbar-brand {
+  margin-left: 20px;
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-right: 10px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f0f0f0;
+  display: none;
+  padding: 10px;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
