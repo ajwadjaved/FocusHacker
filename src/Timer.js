@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Timer.css';
 
 const Timer = () => {
+  const defaultTime = 5; //25 * 60 default, eventually take input from user
   const [studyBlocks, setStudyBlocks] = useState(Array(5).fill(false)); //5 instances of study blocks
   const [currentBlock, setCurrentBlock] = useState(0);
-  const [seconds, setSeconds] = useState(5); //25 * 60 default
+  const [seconds, setSeconds] = useState(defaultTime);
   const [isRunning, setIsRunning] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     let interval = null;
@@ -17,7 +19,7 @@ const Timer = () => {
             clearInterval(interval);
             setIsRunning(false);
             markStudyBlockComplete();
-            return 0;
+            return defaultTime; //resets the timer
           } else {
             return prevSeconds - 1;
           }
@@ -67,6 +69,14 @@ const Timer = () => {
     return `${minutes}:${seconds}`;
   };
 
+  const handleMouseEnter = () => {
+    setIsDialogOpen(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="timer-container">
       <nav className="navbar">
@@ -90,14 +100,35 @@ const Timer = () => {
       </nav>
       <h1 className="timer-title">Timer</h1>
       <p className="timer-text">Time: {formatTime(seconds)}</p>
-      <div className="study-blocks">
+      {/* <div className="study-blocks">
         {studyBlocks.map((block, index) => (
           <div
             key={index}
             className={`study-block ${block ? 'complete' : ''}`}
           ></div>
         ))}
+      </div> */}
+      <div className="study-blocks">
+        {studyBlocks.map((block, index) => (
+          <div
+            key={index}
+            className={`study-block ${block ? 'complete' : ''}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {isDialogOpen && (
+              <div className="dialog-box">
+                <textarea
+                  className="dialog-input"
+                  placeholder="Write some text..."
+                ></textarea>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
+
+
       <div className="timer-buttons">
         {!isRunning && (
           <>

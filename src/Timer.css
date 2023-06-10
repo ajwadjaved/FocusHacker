@@ -1,4 +1,4 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css');
+/* @import url('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css'); */
 
 body {
     background-color: hsla(350, 100%, 88%, 0.32); /* or any other pink color code you prefer */
@@ -108,3 +108,18 @@ body {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+.dialog-box {
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  
+  .dialog-input {
+    width: 100%;
+    height: 100px;
+  }
+  
