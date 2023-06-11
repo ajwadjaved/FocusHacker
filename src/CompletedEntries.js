@@ -4,8 +4,8 @@ import { Box, Heading, UnorderedList, ListItem, Text } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
-    heading: "Roboto",
-    body: "Roboto",
+    heading: `'Work Sans', sans-serif`,
+    body: `'Work Sans', sans-serif`,
   },
   colors: {
     primary: "#FF0000",

@@ -10,6 +10,10 @@ const theme = extendTheme({
     initialColorMode: "light", // Set the initial color mode to "light" or "dark"
     useSystemColorMode: false, // Set to true to enable automatic color mode based on user's system preference
   },
+  fonts: {
+    body: 'Poppins',
+    heading: 'Inter',
+  },
 });
 
 createRoot(document.getElementById('root')).render(

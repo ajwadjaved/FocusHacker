@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
 
+
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
 
