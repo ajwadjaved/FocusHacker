@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Flex, Button, Input, HStack, chakra } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import DialogBoxStyles from "./DialogBoxStyles.js";
 
 const DialogBox = ({ onStartClick }) => {
@@ -78,70 +78,87 @@ const DialogBox = ({ onStartClick }) => {
   return (
     <Flex sx={DialogBoxStyles.dialogContainer}>
       <Flex sx={DialogBoxStyles.dialogBox}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3 }}
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <AnimatePresence>
           {showTimer ? (
-            <HStack>
-              <chakra.span sx={timerStyle}>{timerText}</chakra.span>
-              {isPaused ? (
+            <motion.div
+              key="timer"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <HStack>
+                <chakra.span sx={timerStyle}>{timerText}</chakra.span>
+                {isPaused ? (
+                  <Button
+                    sx={DialogBoxStyles.dialogButton}
+                    colorScheme="blue"
+                    onClick={handleContinueClick}
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    sx={DialogBoxStyles.dialogButton}
+                    colorScheme="red"
+                    onClick={handlePauseClick}
+                  >
+                    Pause
+                  </Button>
+                )}
+                <Button
+                  sx={DialogBoxStyles.dialogButton}
+                  colorScheme="green"
+                  onClick={handleStopClick}
+                >
+                  Complete
+                </Button>
+              </HStack>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="input"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <HStack>
+                <Input
+                  sx={DialogBoxStyles.dialogInput}
+                  placeholder="What do you want to focus on?"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
                 <Button
                   sx={DialogBoxStyles.dialogButton}
                   colorScheme="blue"
-                  onClick={handleContinueClick}
+                  onClick={handleStartClick}
                 >
-                  Continue
+                  {isTimerRunning ? "Stop" : "Start"}
                 </Button>
-              ) : (
-                <Button
-                  sx={DialogBoxStyles.dialogButton}
-                  colorScheme="red"
-                  onClick={handlePauseClick}
-                >
-                  Pause
-                </Button>
-              )}
-              <Button
-                sx={DialogBoxStyles.dialogButton}
-                colorScheme="green"
-                onClick={handleStopClick}
-              >
-                Complete
-              </Button>
-            </HStack>
-          ) : (
-            <HStack>
-              <Input
-                sx={DialogBoxStyles.dialogInput}
-                placeholder="What do you want to focus on?"
-                value={inputValue}
-                onChange={handleInputChange}
-              />
-              <Button
-                sx={DialogBoxStyles.dialogButton}
-                colorScheme="blue"
-                onClick={handleStartClick}
-              >
-                {isTimerRunning ? "Stop" : "Start"}
-              </Button>
-              {isTimerRunning && (
-                <chakra.span sx={timerStyle}>{timerText}</chakra.span>
-              )}
-            </HStack>
+                {isTimerRunning && (
+                  <chakra.span sx={timerStyle}>{timerText}</chakra.span>
+                )}
+              </HStack>
+            </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
       </Flex>
     </Flex>
-  );  
+  );
+  
 }
         
 export default DialogBox;
