@@ -2,50 +2,64 @@ import React from "react";
 import {
   Box,
   Heading,
-  UnorderedList,
-  ListItem,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
   Text,
   ChakraProvider,
-  extendTheme
+  extendTheme,
 } from "@chakra-ui/react";
 
 const theme = extendTheme({
   // Theme configuration
 });
 
-const CompletedEntries = ({ entries }) => { // Remove totalTime since it's no longer needed
+const CompletedEntries = ({ entries }) => {
   return (
     <ChakraProvider theme={theme}>
       <Box
         width="40%"
         margin="0 auto"
-        border="1px solid black"
+        border="2px solid black"
         borderRadius="md"
-        p={4}
-        mt={4}
+        p={2}
+        mt={0}
+        overflow="auto"
+        maxHeight="500px"
       >
         <Heading as="h2" size="md" mb={4}>
-          Completed Entries
+          Work Diary
         </Heading>
         {entries.length > 0 ? (
-          <>
-            <UnorderedList styleType="none">
-              {entries.map((entry, index) => (
-                <ListItem
+          <Table variant="striped" colorScheme="pink" borderWidth="0px" borderRadius="md" size="sm">
+            <Thead>
+              <Tr>
+                <Th fontSize="md">Entry</Th>
+                <Th fontSize="md">Tag</Th>
+                <Th fontSize="md">Description</Th>
+                <Th fontSize="md">Time Worked</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {entries.slice(0).reverse().map((entry, index) => (
+                <Tr
                   key={index}
                   _hover={{
                     background: "rgba(0, 0, 0, 0.1)",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
-                  <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <Text>{entry.entry}</Text> {/* Access the entry property */}
-                    <Text marginLeft="8px">Time Worked: {entry.time}</Text> {/* Access the time property */}
-                  </Box>
-                </ListItem>
+                  <Td fontSize="md">{entry.entry}</Td>
+                  <Td fontSize="md">{entry.tag}</Td>
+                  <Td fontSize="md">{entry.description || "No description"}</Td>
+                  <Td fontSize="md">{entry.time}</Td>
+                </Tr>
               ))}
-            </UnorderedList>
-          </>
+            </Tbody>
+          </Table>
         ) : (
           <Text>No completed entries yet.</Text>
         )}

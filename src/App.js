@@ -8,10 +8,9 @@ const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
   const [totalTime, setTotalTime] = useState("");
 
-  const handleStartClick = (inputValue, totalTime) => {
-    console.log("User input:", inputValue);
-
-    setCompletedEntries((prevEntries) => [...prevEntries, { entry: inputValue, time: totalTime }]);
+  const handleStartClick = (inputValue, totalTime, tagValue) => {
+    // console.log("User input:", inputValue);
+    setCompletedEntries((prevEntries) => [...prevEntries, { entry: inputValue, time: totalTime, tag: tagValue }]);
     setTotalTime(totalTime);
   };
 

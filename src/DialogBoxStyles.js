@@ -7,14 +7,23 @@ const DialogBoxStyles = {
     height: "30vh",
   },
   dialogBox: {
-    width: "500px",
-    flexDirection: "column",
-    padding: 4,
+    width: "720px",
+    maxWidth: "100%",
+    margin: "0 auto",
+    padding: "24px",
     borderRadius: "md",
-    boxShadow: "md",
+    // backgroundColor: "white",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   dialogInput: {
-    width: "400px",
+    width: "500px",
+    marginBottom: 1,
+  },
+  tagInput: {
+    width: "120px",
     marginBottom: 1,
   },
   dialogButton: {

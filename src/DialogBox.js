@@ -11,20 +11,36 @@ const DialogBox = ({ onStartClick }) => {
   const [seconds, setSeconds] = useState(0);
   const [showTimer, setShowTimer] = useState(false);
   const [totalTime, setTotalTime] = useState("");
+  const [tagValue, setTagValue] = useState(""); // New state for tag value
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  const handleTagChange = (e) => {
+    const value = e.target.value;
+    // Check if the entered value starts with "@"
+    if (value.startsWith("@")) {
+      setTagValue(value); // Update tag value
+    } else {
+      setTagValue(`@${value}`); // Add "@" at the start of the value
+    }
+  };
+  
+
   const handleStartClick = () => {
     if (isTimerRunning) {
-      setIsPaused(!isPaused); // Pause or continue the timer
+      setIsPaused(!isPaused); // Toggle timer on
     } else {
       setIsTimerRunning(true); // Start the timer
       setMinutes(0); // Reset the minutes
       setSeconds(0); // Reset the seconds
       setShowTimer(true); // Show the timer
       setTotalTime(""); // Reset the total time
+      
+    // Check if the tagValue is empty
+      // const formattedTagValue = tagValue.trim() !== "" ? tagValue : "No tag";
+      // onStartClick(inputValue, `${minutes}:${seconds}`, formattedTagValue); // Pass input value, total time, and tag value to parent component
     }
   };
   
@@ -32,11 +48,39 @@ const DialogBox = ({ onStartClick }) => {
   const handleStopClick = () => {
     setIsTimerRunning(false); // Stop the timer
     setIsPaused(false); // Reset pause state
-    onStartClick(inputValue, `${minutes}:${seconds}`); // Pass input value and total time to parent component
+    const formattedTagValue = tagValue.trim() !== "" ? tagValue : "No tag"; // Format the tag value
+    onStartClick(inputValue, `${minutes}:${seconds}`, formattedTagValue); // Pass input value, total time, and tag value to parent component
     setInputValue(""); // Clear input value
+    setTagValue(""); // Clear tag value
     setShowTimer(false); // Hide the timer
   };
   
+  
+  const handlePauseClick = () => {
+    setIsPaused(true); // Pause the timer
+  };
+
+  const handleContinueClick = () => {
+    setIsPaused(false); // Continue the timer
+  };
+  
+  // const handleKeyPress = (e) => {
+  //   if (e.code === "Space") {
+  //     if (isPaused) {
+  //       handleContinueClick(); // Continue the timer
+  //     } else {
+  //       handlePauseClick(); // Pause the timer
+  //     }
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   window.addEventListener("keydown", handleKeyPress); // Add event listener for keydown
+  
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyPress); // Clean up event listener
+  //   };
+  // }, [showTimer]);
 
   useEffect(() => {
     let intervalId;
@@ -60,14 +104,6 @@ const DialogBox = ({ onStartClick }) => {
       setSeconds(0);
     }
   }, [minutes, seconds]);
-
-  const handlePauseClick = () => {
-    setIsPaused(true); // Pause the timer
-  };
-
-  const handleContinueClick = () => {
-    setIsPaused(false); // Continue the timer
-  };
 
   const timerText = isTimerRunning
     ? `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
@@ -98,7 +134,7 @@ const DialogBox = ({ onStartClick }) => {
                 {isPaused ? (
                   <Button
                     sx={DialogBoxStyles.dialogButton}
-                    colorScheme="blue"
+                    colorScheme="green"
                     onClick={handleContinueClick}
                   >
                     Continue
@@ -112,13 +148,15 @@ const DialogBox = ({ onStartClick }) => {
                     Pause
                   </Button>
                 )}
-                <Button
-                  sx={DialogBoxStyles.dialogButton}
-                  colorScheme="green"
-                  onClick={handleStopClick}
-                >
-                  Complete
-                </Button>
+                {isPaused ? null : ( // Show "Complete" button only when not paused
+                  <Button
+                    sx={DialogBoxStyles.dialogButton}
+                    colorScheme="green"
+                    onClick={handleStopClick}
+                  >
+                    Complete
+                  </Button>
+                )}
               </HStack>
             </motion.div>
           ) : (
@@ -141,9 +179,15 @@ const DialogBox = ({ onStartClick }) => {
                   value={inputValue}
                   onChange={handleInputChange}
                 />
+                <Input
+                  sx={DialogBoxStyles.tagInput}
+                  placeholder="@Add a tag"
+                  value={tagValue}
+                  onChange={handleTagChange}
+                />
                 <Button
                   sx={DialogBoxStyles.dialogButton}
-                  colorScheme="blue"
+                  colorScheme="green"
                   onClick={handleStartClick}
                 >
                   {isTimerRunning ? "Stop" : "Start"}
@@ -158,6 +202,7 @@ const DialogBox = ({ onStartClick }) => {
       </Flex>
     </Flex>
   );
+  
   
 }
         
