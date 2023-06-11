@@ -44,7 +44,7 @@ const CompletedEntries = ({ entries }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {entries.slice(0).reverse().map((entry, index) => (
+              {entries.slice(0).reverse().map((entry, index) => ( //displays in reverse order for the table
                 <Tr
                   key={index}
                   _hover={{
