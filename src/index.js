@@ -1,17 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createRoot } from 'react-dom/client';
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import NavBar from './Navbar';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+// Extend the default Chakra UI theme
+const theme = extendTheme({
+  config: {
+    initialColorMode: "light", // Set the initial color mode to "light" or "dark"
+    useSystemColorMode: false, // Set to true to enable automatic color mode based on user's system preference
+  },
+});
+
+createRoot(document.getElementById('root')).render(
+  <ChakraProvider theme={theme}>
+    <NavBar /> 
     <App />
-  </React.StrictMode>
+  </ChakraProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
