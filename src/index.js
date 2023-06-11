@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from './App';
-import NavBar from './Navbar';
+
 
 // Extend the default Chakra UI theme
 const theme = extendTheme({
@@ -14,11 +14,18 @@ const theme = extendTheme({
     body: 'Poppins',
     heading: 'Inter',
   },
+  styles: {
+    global: (props) => ({
+      body: {
+        bg: props.colorMode === "light" ? "lightpink" : "white", // Set light pink shade as the background color in light mode
+      },
+    }),
+  },
 });
 
 createRoot(document.getElementById('root')).render(
   <ChakraProvider theme={theme}>
-    <NavBar /> 
+    
     <App />
   </ChakraProvider>
 );

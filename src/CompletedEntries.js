@@ -1,40 +1,19 @@
 import React from "react";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { Box, Heading, UnorderedList, ListItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  UnorderedList,
+  ListItem,
+  Text,
+  ChakraProvider,
+  extendTheme
+} from "@chakra-ui/react";
 
 const theme = extendTheme({
-  fonts: {
-    heading: `'Work Sans', sans-serif`,
-    body: `'Work Sans', sans-serif`,
-  },
-  colors: {
-    primary: "#FF0000",
-    secondary: "#00FF00",
-  },
-  components: {
-    Heading: {
-      baseStyle: {
-        color: "primary",
-      },
-    },
-    UnorderedList: {
-      baseStyle: {
-        spacing: 4,
-      },
-    },
-    ListItem: {
-      baseStyle: {
-        paddingY: 2,
-        paddingLeft: 4,
-        borderRadius: "md",
-        backgroundColor: "secondary",
-        color: "white",
-      },
-    },
-  },
+  // Theme configuration
 });
 
-const CompletedEntries = ({ entries }) => {
+const CompletedEntries = ({ entries }) => { // Remove totalTime since it's no longer needed
   return (
     <ChakraProvider theme={theme}>
       <Box
@@ -49,13 +28,24 @@ const CompletedEntries = ({ entries }) => {
           Completed Entries
         </Heading>
         {entries.length > 0 ? (
-          <UnorderedList>
-            {entries.map((entry, index) => (
-              <ListItem key={index}>
-                <Text>{entry}</Text>
-              </ListItem>
-            ))}
-          </UnorderedList>
+          <>
+            <UnorderedList styleType="none">
+              {entries.map((entry, index) => (
+                <ListItem
+                  key={index}
+                  _hover={{
+                    background: "rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer"
+                  }}
+                >
+                  <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Text>{entry.entry}</Text> {/* Access the entry property */}
+                    <Text marginLeft="8px">Time Worked: {entry.time}</Text> {/* Access the time property */}
+                  </Box>
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </>
         ) : (
           <Text>No completed entries yet.</Text>
         )}

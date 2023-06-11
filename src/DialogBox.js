@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Button, Input, HStack } from "@chakra-ui/react";
+import { Flex, Button, Input, HStack, chakra } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import DialogBoxStyles from "./DialogBoxStyles.js";
 
 const DialogBox = ({ onStartClick }) => {
   const [inputValue, setInputValue] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [timer, setTimer] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [showTimer, setShowTimer] = useState(false);
+  const [totalTime, setTotalTime] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -13,51 +18,130 @@ const DialogBox = ({ onStartClick }) => {
 
   const handleStartClick = () => {
     if (isTimerRunning) {
-      setIsTimerRunning(false); // Stop the timer
+      setIsPaused(!isPaused); // Pause or continue the timer
     } else {
       setIsTimerRunning(true); // Start the timer
-      setTimer(0); // Reset the timer
+      setMinutes(0); // Reset the minutes
+      setSeconds(0); // Reset the seconds
+      setShowTimer(true); // Show the timer
+      setTotalTime(""); // Reset the total time
     }
-    onStartClick(inputValue);
-    setInputValue("");
   };
+  
+
+  const handleStopClick = () => {
+    setIsTimerRunning(false); // Stop the timer
+    setIsPaused(false); // Reset pause state
+    onStartClick(inputValue, `${minutes}:${seconds}`); // Pass input value and total time to parent component
+    setInputValue(""); // Clear input value
+    setShowTimer(false); // Hide the timer
+  };
+  
 
   useEffect(() => {
     let intervalId;
-    if (isTimerRunning) {
+    if (isTimerRunning && !isPaused) {
       intervalId = setInterval(() => {
-        setTimer((prevTimer) => prevTimer + 1);
+        setSeconds((prevSeconds) => prevSeconds + 1);
       }, 1000);
     }
     return () => {
       clearInterval(intervalId);
     };
-  }, [isTimerRunning]);
+  }, [isTimerRunning, isPaused]);
 
-  const timerText = isTimerRunning ? `Timer: ${timer} seconds` : "";
+  useEffect(() => {
+    if (seconds === 60) {
+      setMinutes((prevMinutes) => prevMinutes + 1);
+      setSeconds(0);
+    }
+    if (minutes === 60) {
+      setMinutes(0);
+      setSeconds(0);
+    }
+  }, [minutes, seconds]);
+
+  const handlePauseClick = () => {
+    setIsPaused(true); // Pause the timer
+  };
+
+  const handleContinueClick = () => {
+    setIsPaused(false); // Continue the timer
+  };
+
+  const timerText = isTimerRunning
+    ? `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+    : "";
+
+  const timerStyle = isTimerRunning ? DialogBoxStyles.timer : {};
 
   return (
     <Flex sx={DialogBoxStyles.dialogContainer}>
       <Flex sx={DialogBoxStyles.dialogBox}>
-        <HStack>
-          <Input
-            sx={DialogBoxStyles.dialogInput}
-            placeholder="What do you want to focus on?"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <Button
-            sx={DialogBoxStyles.dialogButton}
-            colorScheme="blue"
-            onClick={handleStartClick}
-          >
-            {isTimerRunning ? "Stop" : "Start"}
-          </Button>
-          <span>{timerText}</span>
-        </HStack>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {showTimer ? (
+            <HStack>
+              <chakra.span sx={timerStyle}>{timerText}</chakra.span>
+              {isPaused ? (
+                <Button
+                  sx={DialogBoxStyles.dialogButton}
+                  colorScheme="blue"
+                  onClick={handleContinueClick}
+                >
+                  Continue
+                </Button>
+              ) : (
+                <Button
+                  sx={DialogBoxStyles.dialogButton}
+                  colorScheme="red"
+                  onClick={handlePauseClick}
+                >
+                  Pause
+                </Button>
+              )}
+              <Button
+                sx={DialogBoxStyles.dialogButton}
+                colorScheme="green"
+                onClick={handleStopClick}
+              >
+                Complete
+              </Button>
+            </HStack>
+          ) : (
+            <HStack>
+              <Input
+                sx={DialogBoxStyles.dialogInput}
+                placeholder="What do you want to focus on?"
+                value={inputValue}
+                onChange={handleInputChange}
+              />
+              <Button
+                sx={DialogBoxStyles.dialogButton}
+                colorScheme="blue"
+                onClick={handleStartClick}
+              >
+                {isTimerRunning ? "Stop" : "Start"}
+              </Button>
+              {isTimerRunning && (
+                <chakra.span sx={timerStyle}>{timerText}</chakra.span>
+              )}
+            </HStack>
+          )}
+        </motion.div>
       </Flex>
     </Flex>
-  );
-};
-
+  );  
+}
+        
 export default DialogBox;
