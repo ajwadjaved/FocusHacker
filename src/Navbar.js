@@ -18,7 +18,7 @@ const NavBar = () => {
         onClick={toggleColorMode}
         aria-label="Toggle theme"
         variant="ghost"
-        colorScheme="whiteAlpha"
+        color={colorMode === "light" ? "gray.800" : "white"} // Adjusted color based on colorMode
       />
     </Flex>
   );

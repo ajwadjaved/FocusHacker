@@ -1,17 +1,20 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import DialogBox from './DialogBox';
+import CompletedEntries from './CompletedEntries';
 
 const App = () => {
-  const [showDialog, setShowDialog] = useState(true);
+  const [completedEntries, setCompletedEntries] = useState([]);
 
-  const handleDialogClose = () => {
-    setShowDialog(false);
+  const handleStartClick = (inputValue) => {
+    console.log("User input:", inputValue);
+    // Do something with the input value
+    setCompletedEntries((prevEntries) => [...prevEntries, inputValue]);
   };
 
   return (
     <>
-      {showDialog && <DialogBox />}
+      <DialogBox onStartClick={handleStartClick} />
+      <CompletedEntries entries={completedEntries} />
     </>
   );
 };

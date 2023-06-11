@@ -1,9 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Flex, Button, Input, HStack } from "@chakra-ui/react";
-import DialogBoxStyles from "./DialogBoxStyles.js"; // Import DialogBoxStyles
+import DialogBoxStyles from "./DialogBoxStyles.js";
 
-
-const DialogBox = ({ onDialogClose }) => {
+const DialogBox = ({ onStartClick }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -11,20 +10,25 @@ const DialogBox = ({ onDialogClose }) => {
   };
 
   const handleStartClick = () => {
-    // Do something with the input value
-    console.log("User input:", inputValue);
+    onStartClick(inputValue);
+    setInputValue("");
   };
 
   return (
     <Flex sx={DialogBoxStyles.dialogContainer}>
       <Flex sx={DialogBoxStyles.dialogBox}>
         <HStack>
-          <Input sx={DialogBoxStyles.dialogInput}
+          <Input
+            sx={DialogBoxStyles.dialogInput}
             placeholder="What do you want to focus on?"
             value={inputValue}
             onChange={handleInputChange}
           />
-          <Button sx={DialogBoxStyles.dialogButton} colorScheme="blue" onClick={handleStartClick}>
+          <Button
+            sx={DialogBoxStyles.dialogButton}
+            colorScheme="blue"
+            onClick={handleStartClick}
+          >
             Start
           </Button>
         </HStack>
