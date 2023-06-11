@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <>
-      {showDialog && <DialogBox onDialogClose={handleDialogClose} />}
+      {showDialog && <DialogBox />}
     </>
   );
 };

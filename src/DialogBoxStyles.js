@@ -1,10 +1,11 @@
-const dialogBoxStyles = {
+const DialogBoxStyles = {
   dialogContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: "50vh",
+    height: "30vh",
   },
   dialogBox: {
+    width: "500px",
     flexDirection: "column",
     padding: 4,
     borderRadius: "md",
@@ -18,4 +19,4 @@ const dialogBoxStyles = {
   },
 };
 
-export default dialogBoxStyles;
+export default DialogBoxStyles;
