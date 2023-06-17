@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NavBar from './Navbar';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
-
+import Footer from './Footer';
 
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
@@ -19,6 +19,7 @@ const App = () => {
       <NavBar /> 
       <DialogBox onStartClick={handleStartClick} />
       <CompletedEntries entries={completedEntries} />
+      <Footer />
     </>
   );
 };

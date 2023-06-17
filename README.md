@@ -18,6 +18,8 @@ The Productivity App is built using React and Chakra UI. It consists of two main
 1. **DialogBox**: This component allows users to enter a task, add a tag, and start a timer. The timer can be paused and continued, and when the task is completed, it will be added to the completed entries list.
 
 2. **CompletedEntries**: This component displays a list of completed tasks. It provides a table view with columns for the task entry, tag, description, and time worked. The entries are displayed in reverse chronological order.
+  
+3. **Analytics**:
 
 ## Features
 
@@ -63,4 +65,4 @@ The Productivity App is open-source software released under the [MIT License](ht
 
 ## Acknowledgments
 
-We would like to thank the Chakra UI and React communities for their excellent libraries and resources that have contributed to the development of this project.
+I would like to thank the Chakra UI and React communities for their excellent libraries and resources that have contributed to the development of this project.

@@ -28,6 +28,14 @@ const DialogBoxStyles = {
   },
   dialogButton: {
     alignSelf: "flex-end",
+    rounded: "md", // Rounded corners
+    px: "3", // Horizontal padding
+    py: "0", // Vertical padding
+    fontSize: "md", // Font size
+    fontWeight: "bold", // Font weight
+    // _hover: {
+      // // Hover styles
+      // backgroundColor: "bglue.100",
   },
   timer: {
     fontFamily: "monospace",

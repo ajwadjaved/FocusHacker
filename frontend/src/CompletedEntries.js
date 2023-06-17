@@ -34,7 +34,7 @@ const CompletedEntries = ({ entries }) => {
           Work Diary
         </Heading>
         {entries.length > 0 ? (
-          <Table variant="striped" colorScheme="pink" borderWidth="0px" borderRadius="md" size="sm">
+          <Table variant="simple" colorScheme="pink" borderWidth="0px" borderRadius="md" size="sm">
             <Thead>
               <Tr>
                 <Th fontSize="md">Entry</Th>
