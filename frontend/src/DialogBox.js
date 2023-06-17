@@ -36,7 +36,7 @@ const DialogBox = ({ onStartClick }) => {
       setMinutes(0); // Reset the minutes
       setSeconds(0); // Reset the seconds
       setShowTimer(true); // Show the timer
-      setTotalTime(""); // Reset the total time
+      setTotalTime(`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`); // Set the total time
       
     // Check if the tagValue is empty
       // const formattedTagValue = tagValue.trim() !== "" ? tagValue : "No tag";

@@ -3,15 +3,32 @@ import NavBar from './Navbar';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
 import Footer from './Footer';
+import { saveEntry } from './api'; // Import the saveEntry function from api.js
 
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
-  const [totalTime, setTotalTime] = useState("");
+  const [totalTime, setTotalTime] = useState('');
 
-  const handleStartClick = (inputValue, totalTime, tagValue) => {
-    // console.log("User input:", inputValue);
-    setCompletedEntries((prevEntries) => [...prevEntries, { entry: inputValue, time: totalTime, tag: tagValue }]);
-    setTotalTime(totalTime);
+  const handleStartClick = async (inputValue, tagValue, totalTime) => {
+    try {
+      const entry = {
+        entry: inputValue,
+        tag: tagValue,
+        description: "", // Add a description if needed
+        time_taken: totalTime,
+      };  
+
+      setCompletedEntries((prevEntries) => [
+        ...prevEntries,
+        { entry: inputValue, time: totalTime, tag: tagValue },
+      ]);
+      setTotalTime(totalTime);
+
+      // Call the saveEntry function from api.js to save the entry
+      await saveEntry(entry);
+    } catch (error) {
+      console.error('Error saving entry:', error);
+    }
   };
 
   return (
@@ -23,6 +40,5 @@ const App = () => {
     </>
   );
 };
-
 
 export default App;
