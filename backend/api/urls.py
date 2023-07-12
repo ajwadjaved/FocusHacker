@@ -1,8 +1,6 @@
 from django.urls import path
-from .views import SaveEntryView
-# from . import views
+from api.views import SaveEntry
 
 urlpatterns = [
-    # path('save-entry/', views.save_entry, name='save-entry'),
-    path('api/save-entry/', SaveEntryView.as_view(), name='save_entry'),
+    path('api/save-entry/', SaveEntry.as_view(), name='save_entry'),
 ]

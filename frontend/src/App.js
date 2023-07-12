@@ -9,27 +9,28 @@ const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
   const [totalTime, setTotalTime] = useState('');
 
-  const handleStartClick = async (inputValue, tagValue, totalTime) => {
+  const handleStartClick = async (inputValue, totalTime, tagValue) => {
     try {
       const entry = {
         entry: inputValue,
         tag: tagValue,
         description: "", // Add a description if needed
-        time_taken: totalTime,
-      };  
-
+        time_taken: parseInt(totalTime),
+      };
+  
       setCompletedEntries((prevEntries) => [
         ...prevEntries,
         { entry: inputValue, time: totalTime, tag: tagValue },
       ]);
       setTotalTime(totalTime);
-
+  
       // Call the saveEntry function from api.js to save the entry
       await saveEntry(entry);
     } catch (error) {
       console.error('Error saving entry:', error);
     }
   };
+  
 
   return (
     <>

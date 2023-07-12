@@ -2,31 +2,35 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Entry
 from .serializers import EntrySerializer
+from rest_framework import status
+import logging
 
-class SaveEntryView(APIView):
+logger = logging.getLogger(__name__)
+
+
+class SaveEntry(APIView):
+    def get(self, request, format=None):
+        entries = Entry.objects.all()
+        serializer = EntrySerializer(entries, many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = EntrySerializer(data=request.data)
         if serializer.is_valid():
+            # Check if the 'entry' field is blank and assign the default value if true
+            if not serializer.validated_data.get('entry'):
+                serializer.validated_data['entry'] = 'Default Entry'
+            
+            # Check if the 'description' field is blank and assign the default value if true
+            # if not serializer.validated_data.get('description'):
+                # serializer.validated_data['description'] = 'Default Description'
+            
+            # Check if the 'time_taken' field is blank and assign the default value if true
+            if not serializer.validated_data.get('time_taken'):
+                serializer.validated_data['time_taken'] = 0
+            
             serializer.save()
             return Response({'message': 'Entry saved successfully.'})
         else:
-            return Response(serializer.errors, status=400)
-
-
-# from django.http import JsonResponse
-# from .models import Entry
-# from django.views.decorators.csrf import csrf_exempt
-
-# @csrf_exempt
-# def save_entry(request):
-#     if request.method == 'POST':
-#         entry_data = request.POST
-#         entry = Entry.objects.create(
-#             entry=entry_data.get('entry', ''),
-#             tag=entry_data.get('tag', ''),
-#             description=entry_data.get('description', ''),
-#             time_taken=entry_data.get('time_taken', 0)
-#         )
-#         return JsonResponse({'message': 'Entry saved successfully.'})
-#     else:
-#         return JsonResponse({'error': 'Invalid request method.'})
+            logger.error(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
