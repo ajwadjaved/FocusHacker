@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
     'corsheaders',
     'rest_framework',
-]
+    'django.core.mail',
+    'api',
+    'magic_links',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
