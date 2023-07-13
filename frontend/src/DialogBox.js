@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+// import { Tooltip } from "@chakra-ui/react";
+
 import { Flex, Button, Input, HStack, chakra } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import DialogBoxStyles from "./DialogBoxStyles.js";
@@ -12,6 +14,7 @@ const DialogBox = ({ onStartClick }) => {
   const [showTimer, setShowTimer] = useState(false);
   const [totalTime, setTotalTime] = useState("");
   const [tagValue, setTagValue] = useState(""); // New state for tag value
+  // const [showTooltip, setShowTooltip] = useState(false); // New state for tooltip
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -27,8 +30,12 @@ const DialogBox = ({ onStartClick }) => {
     }
   };
   
-
   const handleStartClick = () => {
+    if (inputValue.trim() === "") {
+      // setShowTooltip(true); // Set the flag to show the tooltip
+      return; // If inputValue is empty, do not start the timer
+    }
+    
     if (isTimerRunning) {
       setIsPaused(!isPaused); // Toggle timer on
     } else {
@@ -37,24 +44,19 @@ const DialogBox = ({ onStartClick }) => {
       setSeconds(0); // Reset the seconds
       setShowTimer(true); // Show the timer
       setTotalTime(`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`); // Set the total time
-      
-    // Check if the tagValue is empty
-      // const formattedTagValue = tagValue.trim() !== "" ? tagValue : "No tag";
-      // onStartClick(inputValue, `${minutes}:${seconds}`, formattedTagValue); // Pass input value, total time, and tag value to parent component
     }
   };
   
-
   const handleStopClick = () => {
     setIsTimerRunning(false); // Stop the timer
     setIsPaused(false); // Reset pause state
     const formattedTagValue = tagValue.trim() !== "" ? tagValue : "No tag"; // Format the tag value
-    onStartClick(inputValue, `${minutes}:${seconds}`, formattedTagValue); // Pass input value, total time, and tag value to parent component
+    const totalTime = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`; // Calculate the total time
+    onStartClick(inputValue, totalTime, formattedTagValue); // Pass input value, total time, and tag value to parent component
     setInputValue(""); // Clear input value
     setTagValue(""); // Clear tag value
     setShowTimer(false); // Hide the timer
   };
-  
   
   const handlePauseClick = () => {
     setIsPaused(true); // Pause the timer
@@ -202,6 +204,7 @@ const DialogBox = ({ onStartClick }) => {
       </Flex>
     </Flex>
   );
+
   
   
 }
