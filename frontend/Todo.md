@@ -3,15 +3,16 @@
 - Pop up tooltip that tells you that you have to have some thing written in timer for it to start
 
 ## Doing
-- (Priority) Load Work Diary from database, persistent Work Diary
+- Add magic link sign in
 - Create Analysis Page
 - Make tags groupable on Analysis page
 - Improve formating of table so Entry isn't overloaded
 - Make timer HH:MM:SS with HH hidden by default
 
 ## Done
-- ~~Integrate tech stack (Django backend/PostGreSQL database)~~
-- ~~Make Title/Tags/Description editable~~
+- (Priority) Load Work Diary from database, persistent Work Diary
+- Integrate tech stack (Django backend/PostGreSQL database)
+- Make Title/Tags/Description editable
 - Create Description
 - Create Tags
 - Create Footer

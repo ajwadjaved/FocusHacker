@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-// import moment from 'moment'; 
-
 import NavBar from './Navbar';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
 import Footer from './Footer';
-import { saveEntry, getWorkDiary } from './api';
+import { saveEntry, getWorkDiary, updateEntry } from './api';
 
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
   const [totalTime, setTotalTime] = useState('');
+  const [selectedEntry, setSelectedEntry] = useState(null);
 
   useEffect(() => {
-    // Fetch work diary entries on component mount
     fetchWorkDiaryEntries();
   }, []);
 
@@ -25,14 +23,27 @@ const App = () => {
     }
   };
 
-  const handleStartClick = async (inputValue, totalTime, tagValue) => {  
+  const handleEditEntry = (entry) => {
+    setSelectedEntry(entry);
+  };
+
+  const handleSaveEntry = async (updatedEntry) => {
     try {
-      // console.log(typeof(totalTime));
+      await updateEntry(updatedEntry.id, updatedEntry);
+      setSelectedEntry(null);
+      fetchWorkDiaryEntries();
+    } catch (error) {
+      console.error('Error updating entry:', error);
+    }
+  };
+
+  const handleStartClick = async (inputValue, totalTime, tagValue) => {
+    try {
       const entry = {
         entry: inputValue,
         tag: tagValue,
-        description: '', // Add a description if needed
-        time_taken: totalTime, // Convert to datetime format
+        description: '',
+        time_taken: totalTime,
       };
 
       setCompletedEntries((prevEntries) => [
@@ -41,7 +52,6 @@ const App = () => {
       ]);
       setTotalTime(totalTime);
 
-      // Call the saveEntry function from api.js to save the entry
       await saveEntry(entry);
     } catch (error) {
       console.error('Error saving entry:', error);
@@ -52,7 +62,11 @@ const App = () => {
     <>
       <NavBar />
       <DialogBox onStartClick={handleStartClick} />
-      <CompletedEntries entries={completedEntries} />
+      <CompletedEntries
+        entries={completedEntries}
+        onEditEntry={handleEditEntry}
+        onSaveEntry={handleSaveEntry}
+      />
       <Footer />
     </>
   );

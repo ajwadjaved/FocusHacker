@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Entry
 from .serializers import EntrySerializer
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 import logging
 
 logger = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ class SaveEntry(APIView):
             
             # Check if the 'description' field is blank and assign the default value if true
             # if not serializer.validated_data.get('description'):
-                # serializer.validated_data['description'] = 'Default Description'
+            #     serializer.validated_data['description'] = 'Default Description'
             
             # Check if the 'time_taken' field is blank and assign the default value if true
             if not serializer.validated_data.get('time_taken'):
@@ -31,6 +32,18 @@ class SaveEntry(APIView):
             
             serializer.save()
             return Response({'message': 'Entry saved successfully.'})
+        else:
+            logger.error(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateEntry(APIView):
+    def put(self, request, entry_id, format=None):
+        entry = get_object_or_404(Entry, id=entry_id)
+        serializer = EntrySerializer(entry, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Entry updated successfully.'})
         else:
             logger.error(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

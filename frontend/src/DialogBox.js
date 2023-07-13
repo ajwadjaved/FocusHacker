@@ -13,8 +13,12 @@ const DialogBox = ({ onStartClick }) => {
   const [seconds, setSeconds] = useState(0);
   const [showTimer, setShowTimer] = useState(false);
   const [totalTime, setTotalTime] = useState("");
-  const [tagValue, setTagValue] = useState(""); // New state for tag value
-  // const [showTooltip, setShowTooltip] = useState(false); // New state for tooltip
+  const [tagValue, setTagValue] = useState("");
+  // const [showTooltip, setShowTooltip] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedEntry, setEditedEntry] = useState({});
+
+
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
