@@ -38,6 +38,12 @@ const App = () => {
   //   }
   // };
 
+  
+  const handleRowClick = (entryId) => {
+    console.log('Clicked entryId:', entryId);
+    // Perform any desired action with the entryId
+  };
+
   const handleStartClick = async (inputValue, totalTime, tagValue) => {
     try {
       const entry = {
@@ -63,11 +69,12 @@ const App = () => {
     <>
       <NavBar />
       <DialogBox onStartClick={handleStartClick} />
-      <CompletedEntries
+      <CompletedEntries entries={completedEntries} onRowClick={handleRowClick} />
+      {/* <CompletedEntries
         entries={completedEntries}
         // onEditEntry={handleEditEntry}
         // onSaveEntry={handleSaveEntry}
-      />
+      /> */}
       <Footer />
     </>
   );

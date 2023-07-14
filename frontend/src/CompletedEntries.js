@@ -15,7 +15,12 @@ import {
 
 const theme = extendTheme({}); // Create an empty theme object
 
-const CompletedEntries = ({ entries }) => {
+const CompletedEntries = ({ entries, onRowClick }) => {
+  const handleRowClick = (entryId) => {
+    // Invoke the onRowClick function with the entryId as the argument
+    onRowClick(entryId);
+  };
+
   return (
     <ChakraProvider>
       <Box
@@ -49,7 +54,11 @@ const CompletedEntries = ({ entries }) => {
             </Thead>
             <Tbody>
               {entries.slice(0).reverse().map((entry, index) => (
-                <Tr key={index}>
+                <Tr
+                  key={index}
+                  onClick={() => handleRowClick(entry.id)} // Invoke handleRowClick with the entry ID
+                  style={{ cursor: 'pointer' }}
+                >
                   <Td fontSize="md">{entry.entry}</Td>
                   <Td fontSize="md">{entry.tag}</Td>
                   <Td fontSize="md">
