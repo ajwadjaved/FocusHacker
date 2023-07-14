@@ -38,3 +38,14 @@ export const updateEntry = async (entryId, updatedEntry) => {
     throw error; // Throw the error for error handling in the component
   }
 };
+
+// Function to make a POST request to sign in with the provided email
+export const signIn = async (email) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/sign-in/`, { email });
+    return response.data; // Return the response data if needed
+  } catch (error) {
+    console.error('Error signing in:', error);
+    throw error; // Throw the error for error handling in the component
+  }
+};

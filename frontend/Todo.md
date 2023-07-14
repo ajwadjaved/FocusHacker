@@ -17,3 +17,7 @@
 - Create Tags
 - Create Footer
 - Create NavBar
+  
+## Bugs
+- Clicking to edit a row changes the dimensions of the table in the background
+- When you're editing in the pop-up the text in the background is syncing
