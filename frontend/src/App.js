@@ -3,12 +3,13 @@ import NavBar from './Navbar';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
 import Footer from './Footer';
-import { saveEntry, getWorkDiary, updateEntry } from './api';
+import { saveEntry, getWorkDiary } from './api';
+// import { updateEntry } from './api';
 
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
   const [totalTime, setTotalTime] = useState('');
-  const [selectedEntry, setSelectedEntry] = useState(null);
+  // const [selectedEntry, setSelectedEntry] = useState(null);
 
   useEffect(() => {
     fetchWorkDiaryEntries();
@@ -23,26 +24,26 @@ const App = () => {
     }
   };
 
-  const handleEditEntry = (entry) => {
-    setSelectedEntry(entry);
-  };
+  // const handleEditEntry = (entry) => {
+  //   setSelectedEntry(entry);
+  // };
 
-  const handleSaveEntry = async (updatedEntry) => {
-    try {
-      await updateEntry(updatedEntry.id, updatedEntry);
-      setSelectedEntry(null);
-      fetchWorkDiaryEntries();
-    } catch (error) {
-      console.error('Error updating entry:', error);
-    }
-  };
+  // const handleSaveEntry = async (updatedEntry) => {
+  //   try {
+  //     await updateEntry(updatedEntry.id, updatedEntry);
+  //     setSelectedEntry(null);
+  //     fetchWorkDiaryEntries();
+  //   } catch (error) {
+  //     console.error('Error updating entry:', error);
+  //   }
+  // };
 
   const handleStartClick = async (inputValue, totalTime, tagValue) => {
     try {
       const entry = {
         entry: inputValue,
         tag: tagValue,
-        description: '',
+        description: 'No Description',
         time_taken: totalTime,
       };
 
@@ -51,7 +52,7 @@ const App = () => {
         { entry: inputValue, time: totalTime, tag: tagValue },
       ]);
       setTotalTime(totalTime);
-
+      console.log(entry)
       await saveEntry(entry);
     } catch (error) {
       console.error('Error saving entry:', error);
@@ -64,8 +65,8 @@ const App = () => {
       <DialogBox onStartClick={handleStartClick} />
       <CompletedEntries
         entries={completedEntries}
-        onEditEntry={handleEditEntry}
-        onSaveEntry={handleSaveEntry}
+        // onEditEntry={handleEditEntry}
+        // onSaveEntry={handleSaveEntry}
       />
       <Footer />
     </>
