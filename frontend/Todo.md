@@ -21,3 +21,8 @@
 ## Bugs
 - Clicking to edit a row changes the dimensions of the table in the background
 - When you're editing in the pop-up the text in the background is syncing
+
+## August Todo
+- User Profiles
+- Analysis Page
+- Editable Fields

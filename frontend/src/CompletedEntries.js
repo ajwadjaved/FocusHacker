@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -11,16 +11,76 @@ import {
   Text,
   ChakraProvider,
   extendTheme,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  Button,
 } from '@chakra-ui/react';
+
+import { updateEntry } from './api'; 
 
 const theme = extendTheme({}); // Create an empty theme object
 
-const CompletedEntries = ({ entries, onRowClick }) => {
-  const handleRowClick = (entryId) => {
-    // Invoke the onRowClick function with the entryId as the argument
-    onRowClick(entryId);
+const CompletedEntries = ({ entries, fetchWorkDiaryEntries }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState(null);
+  const [editedEntry, setEditedEntry] = useState({
+    entry: '',
+    tag: '',
+    description: '',
+  });
+
+  const handleRowClick = (entry) => {
+    setSelectedEntry(entry);
+    setEditedEntry({
+      entry: entry.entry,
+      tag: entry.tag,
+      description: entry.description,
+    });
+    setIsOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      // Prepare the updated entry to be sent to the backend
+      const updatedEntryForBackend = {
+        entry: editedEntry.entry,
+        tag: editedEntry.tag,
+        description: editedEntry.description,
+        time_taken: selectedEntry.time_taken, // Keep the original time_taken value
+      };
+  
+      await updateEntry(selectedEntry.id, updatedEntryForBackend);
+  
+      // Close the modal and update the state with the edited entry
+      setIsOpen(false);
+      setSelectedEntry({
+        ...selectedEntry,
+        entry: editedEntry.entry,
+        tag: editedEntry.tag,
+        description: editedEntry.description,
+        time_taken: selectedEntry.time_taken, // Keep the original time_taken value
+      });
+
+      // Fetch the updated entries from the backend and update the state using fetchWorkDiaryEntries
+      await fetchWorkDiaryEntries();
+
+    } catch (error) {
+      console.error('Error updating entry:', error);
+    }
+  };
+  
   return (
     <ChakraProvider>
       <Box
@@ -56,7 +116,7 @@ const CompletedEntries = ({ entries, onRowClick }) => {
               {entries.slice(0).reverse().map((entry, index) => (
                 <Tr
                   key={index}
-                  onClick={() => handleRowClick(entry.id)} // Invoke handleRowClick with the entry ID
+                  onClick={() => handleRowClick(entry)}
                   style={{ cursor: 'pointer' }}
                 >
                   <Td fontSize="md">{entry.entry}</Td>
@@ -72,6 +132,68 @@ const CompletedEntries = ({ entries, onRowClick }) => {
         ) : (
           <Text>No completed entries yet.</Text>
         )}
+
+      <Modal isOpen={isOpen} onClose={handleCloseModal}>
+        <ModalOverlay />
+        <ModalContent
+          style={{
+            backgroundColor: 'white',
+            padding: '1rem',
+            borderRadius: '8px',
+            boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.1)',
+            borderTop: `4px solid #0A192F`,
+            width: '70%',
+            maxHeight: '75vh',
+          }}
+        >
+          <ModalHeader textAlign="center" fontSize="lg" fontWeight="bold" pb={2}>
+            Edit
+          </ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Entry</FormLabel>
+              <Input
+                value={editedEntry.entry}
+                onChange={(e) =>
+                  setEditedEntry({ ...editedEntry, entry: e.target.value })
+                }
+              />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Tag</FormLabel>
+              <Input
+                value={editedEntry.tag}
+                onChange={(e) =>
+                  setEditedEntry({ ...editedEntry, tag: e.target.value })
+                }
+              />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                value={editedEntry.description}
+                onChange={(e) =>
+                  setEditedEntry({
+                    ...editedEntry,
+                    description: e.target.value,
+                  })
+                }
+                maxH="100px" // Set the maximum height for the Textarea
+                overflow="auto" // Set the overflow property to auto to control overflow behavior
+                // resize="none" // Disable resizing of the Textarea
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSaveChanges} size="md">
+              Save Changes
+            </Button>
+            <Button onClick={handleCloseModal} size="sm">
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       </Box>
     </ChakraProvider>
   );
