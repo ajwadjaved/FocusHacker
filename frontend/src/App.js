@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router, Switch, and Route
 import NavBar from './Navbar';
 import DialogBox from './DialogBox';
 import CompletedEntries from './CompletedEntries';
+import Analysis from './Analysis'; // Import your analysis page component
 import Footer from './Footer';
 import { saveEntry, getWorkDiary } from './api';
+
 
 const App = () => {
   const [completedEntries, setCompletedEntries] = useState([]);
@@ -45,15 +48,18 @@ const App = () => {
   };
 
   return (
-    <>
-      <NavBar />
+    <Router>
+    <NavBar />
       <DialogBox onStartClick={handleStartClick} />
-      <CompletedEntries 
-      entries={completedEntries}
-      fetchWorkDiaryEntries={fetchWorkDiaryEntries}
+      <CompletedEntries
+        entries={completedEntries}
+        fetchWorkDiaryEntries={fetchWorkDiaryEntries}
       />
-      <Footer />
-    </>
+      <Routes>
+      <Route path="/Analysis" component={Analysis} />
+      </Routes>
+    <Footer />
+    </Router>
   );
 };
 

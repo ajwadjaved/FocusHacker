@@ -1,6 +1,18 @@
-# Productivity App
+# README
 
-The Productivity App is a web application designed to help users track their tasks and improve their productivity. It includes features such as a timer, task entry, and a completed entries list. This README provides an overview of the project, instructions for getting started, and details on how to use the app effectively.
+ FocusHacker is a web application designed to help users track their tasks and improve their productivity. It includes a Work Diary where all your tagged completed entries will go and which you can explore in more detail to unlock your key time periods of productivity. 
+ 
+ This README provides an overview of the project, instructions for getting started, and details on how to use the app effectively.
+
+Home Page
+![Homepage](images/screenshot1.png)
+
+Work Diary
+![Entry](images/screenshot2.png)
+
+Individual Entry's
+
+![Work Diary](images/screenshot3.png)
 
 ## Table of Contents
 
@@ -14,12 +26,6 @@ The Productivity App is a web application designed to help users track their tas
 ## Project Overview
 
 The Productivity App is built using React and Chakra UI. It consists of two main components:
-
-1. **DialogBox**: This component allows users to enter a task, add a tag, and start a timer. The timer can be paused and continued, and when the task is completed, it will be added to the completed entries list.
-
-2. **CompletedEntries**: This component displays a list of completed tasks. It provides a table view with columns for the task entry, tag, description, and time worked. The entries are displayed in reverse chronological order.
-  
-3. **Analytics**:
 
 ## Features
 
@@ -35,12 +41,18 @@ To run the Productivity App locally, follow these steps:
 ### Prerequisites
 
 - Node.js installed on your machine.
+- Python3 and Django installed
 
 ### Installation
 
 1. Clone the repository: `git clone https://github.com/your-username/productivity-app.git`
-2. Navigate to the project directory: `cd productivity-app`
+2. Navigate to the project directory: `cd FocusHacker/frontend`
 3. Install the dependencies: `npm install`
+4. Run ```npm runserver```
+
+For Backend
+1. Navigate to `cd FocusHacker/backend`
+2. Run ```python3 manage.py runserver` to fetch all your entries from the database
 
 ## Usage
 
@@ -48,8 +60,7 @@ To run the Productivity App locally, follow these steps:
 2. Open your web browser and visit `http://localhost:3000` to access the app.
 3. In the DialogBox component, enter a task in the input field and add a tag (optional).
 4. Click the "Start" button to start the timer.
-5. If needed, click the "Pause" button to pause the timer or the "Continue" button to resume it.
-6. Once the task is completed, it will appear in the Completed Entries list, which is displayed in the CompletedEntries component.
+5. Once the task is completed, it will appear in the Completed Entries list, which is displayed in the CompletedEntries component.
 
 ## Contributing
 

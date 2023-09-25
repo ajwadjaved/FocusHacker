@@ -46,7 +46,7 @@ const NavBar = () => {
     <Flex alignItems="center" p={4} bg="blue.700" color="white" fontFamily="sans-serif">
       <Box fontSize="xl" fontWeight="bold">FocusHacker</Box>
       <Box ml={4}>
-        <Link href="#" mr={4}>Analysis</Link>
+        <Link to="/Analysis" mr={4}>Analysis</Link>
         <Link href="#">About</Link>
       </Box>
       <Spacer />
